@@ -1,0 +1,160 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>The South African War, 1899–1902: A Virtual Tour (CAPS Grade 10 History)</title>
+<style>
+:root{--bg:#e8ece3;--panel:#f6f8f2;--ink:#1d2822;--muted:#55645b;--line:#c3ccbd;--accent:#2c4a63;--pin:#a77a1f;--pin-ink:#fff;--sea:#dbe3d6}
+@media(prefers-color-scheme:dark){:root{--bg:#12181c;--panel:#1b242a;--ink:#e6ebe4;--muted:#9aa89f;--line:#33423b;--accent:#8fb4d3;--pin:#d4a23c;--pin-ink:#14100a;--sea:#182026}}
+*{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:var(--ink);font:16px/1.6 Georgia,"Times New Roman",serif}
+main{max-width:1040px;margin:0 auto;padding:26px 18px 48px}
+h1,h2,h3,button,.sans{font-family:"Trebuchet MS",system-ui,sans-serif}
+h1{font-size:clamp(1.7rem,4.5vw,2.6rem);line-height:1.15;margin:0}
+.intro{color:var(--muted);max-width:66ch;margin:10px 0 22px}
+.grid{display:grid;gap:20px}
+@media(min-width:900px){.grid{grid-template-columns:.9fr 1.3fr;align-items:start}}
+.map{background:var(--sea);border:1px solid var(--line);border-radius:10px;padding:8px;position:sticky;top:8px}
+svg{width:100%;height:auto;display:block}
+.route{fill:none;stroke:var(--muted);stroke-width:1.5;stroke-dasharray:4 5}
+.pin{cursor:pointer;outline:none}
+.pin circle{fill:var(--panel);stroke:var(--pin);stroke-width:2.5}
+.pin text{fill:var(--ink);font:600 12px sans-serif;text-anchor:middle;pointer-events:none}
+.pin .lab{font:500 11px sans-serif;fill:var(--muted)}
+.pin.on circle{fill:var(--pin)}
+.pin.on text:not(.lab){fill:var(--pin-ink)}
+.pin:focus-visible circle{stroke:var(--accent);stroke-width:4}
+.note{font-size:.78rem;color:var(--muted);margin:6px 4px 2px}
+.card{background:var(--panel);border:1px solid var(--line);border-radius:10px;padding:22px}
+.caps{font:600 .82rem "Trebuchet MS",sans-serif;color:var(--accent);margin:0 0 4px}
+h2{font-size:1.5rem;margin:0 0 6px;line-height:1.2}
+.key{font-style:italic;color:var(--muted);margin:0 0 14px}
+.card p{margin:0 0 12px}
+h3{font-size:1rem;margin:18px 0 6px;color:var(--accent)}
+figure{margin:12px 0}
+figure img{max-width:100%;border-radius:6px;display:block}
+figcaption{font-size:.85rem;color:var(--muted);margin-top:4px}
+ol{padding-left:22px;margin:0}
+li{margin-bottom:6px}
+.m{color:var(--muted);font-size:.85rem;white-space:nowrap}
+.links{font-size:.9rem;padding-left:18px}
+a{color:var(--accent)}
+.nav{display:flex;align-items:center;gap:10px;margin-top:20px}
+.nav span{flex:1;text-align:center;color:var(--muted);font-size:.9rem}
+button,.btn{font:600 .92rem "Trebuchet MS",sans-serif;padding:9px 16px;border-radius:8px;border:1px solid var(--accent);background:var(--accent);color:var(--bg);cursor:pointer;text-decoration:none;display:inline-block}
+button:disabled{opacity:.35;cursor:default}
+button:focus-visible,.btn:focus-visible{outline:3px solid var(--pin);outline-offset:2px}
+footer{margin-top:24px;color:var(--muted);font-size:.85rem}
+</style>
+</head>
+<body>
+<main>
+<h1>The South African War, 1899–1902: a virtual tour</h1>
+<p class="intro">CAPS History Grade 10, Term 4, Topic 6: <em>How did the period 1899–1910 shape 20th century South Africa?</em> Visit five areas, study the sources and answer the questions in your workbook.</p>
+<p><a id="earth" class="btn" hidden target="_blank" rel="noopener">Open the Google Earth project</a></p>
+<div class="grid">
+  <div class="map">
+    <svg viewBox="0 0 560 330" role="group" aria-label="Schematic map of the five tour areas">
+      <polyline class="route" id="route"/><g id="pins"></g>
+    </svg>
+    <p class="note">Schematic map, not to scale. Areas 2 and 4 are both in Bloemfontein, so their pins are offset.</p>
+  </div>
+  <article class="card" aria-live="polite">
+    <p class="caps" id="caps"></p>
+    <h2 id="title"></h2>
+    <p class="key" id="key"></p>
+    <div id="body"></div>
+    <h3>Source</h3><div id="src"></div>
+    <h3>Questions (marks · cognitive level)</h3><ol id="qs"></ol>
+    <h3>Links and further reading</h3><ul class="links" id="links"></ul>
+    <div class="nav"><button id="prev">Previous</button><span id="count"></span><button id="next">Next area</button></div>
+  </article>
+</div>
+<footer>Always open a source’s original page and record its creator, title, date and place of publication before you use it. Casualty figures are widely cited estimates.</footer>
+</main>
+<script>
+// Set this to your Google Earth project link to show the button at the top of the page.
+var GOOGLE_EARTH_URL="";
+var A=[
+{n:"Langlaagte",x:322,y:150,lx:1,t:"Area 1: Gold, Uitlanders and the Jameson Raid",
+ caps:"CAPS: Background to the war – mining capitalism; build-up to the war",
+ key:"How did gold change the Transvaal and push Britain and the ZAR towards war?",
+ p:["Gold was found on the Witwatersrand in 1886, including on the farm Langlaagte. Johannesburg grew into a mining centre fed by British capital, new mining companies and a stock exchange. Britain, then the world’s leading financier, wanted influence over this wealth. New classes emerged: capitalists, a middle class and workers. African men were drawn into a migrant labour system with low wages, and industry became racially divided through job reservation for white workers. African societies responded to the demand for labour in different ways.",
+ "Uitlanders were foreign miners and businessmen, mostly British, who worked in the Transvaal (the ZAR) without the vote. They wanted better transport, water and sewage, an end to the dynamite monopoly and a vote without a 14-year wait. Kruger’s government feared losing control of the republic. Cecil John Rhodes, Prime Minister of the Cape and a mining magnate, saw the grievances as a chance to extend British influence.",
+ "On 29 December 1895 Dr Leander Starr Jameson led about 500 armed men from Pitsani, on the Bechuanaland border, towards Johannesburg, expecting the Uitlanders to rise. The rising had been called off. Jameson’s column surrendered at Doornkop on 2 January 1896 and Rhodes resigned as Cape Prime Minister. Germany’s Kaiser sent Kruger a congratulatory telegram, which alarmed Britain, and the ZAR bought modern weapons. Historians debate how much Rhodes knew and planned. After further tension in 1899, the ZAR issued an ultimatum on 9 October and war began on 11 October 1899."],
+ src:{img:"https://upload.wikimedia.org/wikipedia/commons/d/df/Johannesburg_Gold_Fields_1902.jpg",cap:"Source 1A: Johannesburg Gold Fields, 1902. Wikimedia Commons. Check the file page for the creator, date and licence."},
+ src2:"Source 1B: add your cartoon here. Its caption must name the person shown, the creator, title, date and place of publication.",
+ q:[["Explain TWO ways in which the discovery of gold changed the Transvaal.",2,"L2"],["Study Source 1A. Give TWO things the photograph shows about mining.",2,"L1"],["Who were the Uitlanders?",1,"L1"],["Explain why the Uitlanders’ demands created tension with the ZAR government.",2,"L2"],["Why was Britain interested in controlling the mineral wealth of the Transvaal?",2,"L2"],["Study Source 1B. Explain how Rhodes’s ambitions were linked to the Jameson Raid.",3,"L2"],["Why might historians disagree about Rhodes’s role in the raid?",2,"L3"]],
+ links:[["World History Encyclopedia: Witwatersrand gold","https://www.worldhistory.org/image/21810/witwatersrand-gold/"],["Video from your notes (preview before use): gold discovery","https://youtu.be/Kob5Z8v_Y3Y?t=12"],["Video from your notes (preview before use): Jameson Raid","https://youtu.be/PK8AW2H7IGE?t=109"]]},
+{n:"Old Presidency",x:246,y:274,lx:1,t:"Area 2: The Old Presidency, Bloemfontein, 1900",
+ caps:"CAPS: Two phases of the war (broad overview); heritage and public representation",
+ key:"How did the British occupation of Bloemfontein change the meaning and use of the Old Presidency?",
+ p:["After the battles of Paardeberg, Poplar Grove and Driefontein, Lord Roberts’s army occupied Bloemfontein, capital of the Orange Free State, on 13 March 1900. Troops entered the town first. Roberts and his officers then used the Old Presidency as their headquarters.",
+ "The building was completed in 1886 as the residence of Free State presidents, among them Brand, Reitz and Steyn. Under British control it became Government House. The army stayed for weeks to rest and gather supplies, and a typhoid epidemic added to its losses before it advanced to Pretoria. The site became a museum in 1984. A museum also tells a chosen story, so ask whose story is told here and whose is missing."],
+ src:{cap:"Source 2A: British troops entering Bloemfontein, 13 March 1900. National Galleries of Scotland. Download the image, credit the collection and add it to an assets folder."},
+ src2:"Source 2B: BFI Replay, archival film of the Scots Guards entering Bloemfontein, March 1900 (about 1 minute, silent).",
+ q:[["On what date did Roberts’s army occupy Bloemfontein?",1,"L1"],["Explain TWO reasons why the British wanted to occupy Bloemfontein.",2,"L2"],["Study Source 2A. What does it suggest about how British forces arrived?",2,"L1"],["Explain how the use of the Old Presidency changed after 13 March 1900.",2,"L2"],["Study Source 2B. Why is the film useful, and what can it not tell us about the occupation?",3,"L3"],["Who might feel left out of the story told at a museum like the Old Presidency?",2,"L3"]],
+ links:[["SAHO: The Old Presidency Museum","https://sahistory.org.za/place/old-presidency-museum-bloemfontein"],["Free State Dept of Sport, Arts, Culture and Recreation","https://www.sacr.fs.gov.za/?page_id=3501"],["War Museum: The British soldiers’ Bloemfontein","https://www.wmbr.org.za/publications/the-british-soldiers-bloemfontein-impressions-and-experiences-during-the-time-of-the-british-occupation-13-march-3-may-1900/"],["National Army Museum: Frederick Roberts","https://www.nam.ac.uk/explore/frederick-roberts-bobs"]]},
+{n:"Paardeberg",x:204,y:256,lx:-1,t:"Area 3: Paardeberg and Spion Kop",
+ caps:"CAPS: Two phases of the war – the conventional phase (broad overview)",
+ key:"How did terrain and tactics shape the battles of the first phase of the war?",
+ p:["Paardeberg, 18–27 February 1900: after Kimberley was relieved, General Piet Cronjé’s force retreated towards Bloemfontein with its wagons. British troops stopped it near the Modder River in the Orange Free State. Cronjé chose to defend his position rather than abandon his supplies. After days of fighting and shelling, he surrendered about 4,000 men to Lord Roberts on 27 February.",
+ "Spion Kop, 23–24 January 1900: in Natal, British troops seized the hill at night, hoping to break the Boer line and relieve besieged Ladysmith. Boer forces held the surrounding heights and shelled the summit. Losses were heavy and the British withdrew. Mohandas Gandhi served as a stretcher-bearer with an Indian ambulance corps in Natal. Use a relief map: hills, ridges and valleys decided who could move and who could hide."],
+ src:{cap:"Source 3A: add a map or photograph of the Modder River or Spion Kop battlefield, with creator, title and date."},
+ src2:"",
+ q:[["In which year did the Battle of Paardeberg take place?",1,"L1"],["Name the Boer general who surrendered at Paardeberg.",1,"L1"],["Explain why Cronjé’s surrender was an important victory for Britain.",2,"L2"],["Explain how the terrain influenced the fighting at Paardeberg or Spion Kop.",2,"L2"],["Why was the hill at Spion Kop valuable to both armies?",2,"L2"],["Why might a British soldier and a Boer fighter describe Spion Kop differently?",2,"L3"]],
+ links:[["Smit & Janse van Rensburg (2014), Modder River and terrain (teacher reference)","https://hdl.handle.net/10520/EJC161516"],["Video from your notes (preview before use): Paardeberg","https://youtu.be/RgyK7O3o0VI"]]},
+{n:"Camps",x:286,y:246,lx:1,t:"Area 4: Scorched earth, camps and the people of the war",
+ caps:"CAPS: Second phase; scorched earth; concentration camps; role of women; role of Black South Africans",
+ key:"Who suffered most in the second phase of the war, and how is it remembered?",
+ p:["After Pretoria fell in June 1900 the Boer leaders turned to guerrilla war. Lord Kitchener’s forces responded with scorched earth: farms were burned, livestock destroyed and families moved to concentration camps. Overcrowding, poor food and disease killed an estimated 26,000 to 28,000 Boer civilians, most of them children. Emily Hobhouse’s 1901 report caused outrage in Britain.",
+ "Black South Africans were also held in separate camps, where at least 14,000 died, and many worked as labourers, scouts and drivers for both sides. Women ran farms, nursed the sick and survived the camps. The National Women’s Memorial in Bloemfontein, unveiled in 1913, honours Boer women and children, and heritage debates ask how to remember Black victims too."],
+ src:{cap:"Source 4A: add a photograph of the Bloemfontein camp, the National Women’s Memorial or an extract from Emily Hobhouse’s report, with full details."},
+ src2:"",
+ q:[["What was the scorched earth policy?",2,"L1"],["Explain why the British built concentration camps.",2,"L2"],["Describe the experiences of women in the war.",3,"L2"],["How were Black South Africans affected by the war?",3,"L2"],["Whose suffering does the National Women’s Memorial remember, and whose is less visible? Explain.",3,"L3"]],
+ links:[["War Museum of the Boer Republics, Bloemfontein","https://www.wmbr.org.za/"]]},
+{n:"Pretoria",x:352,y:112,lx:1,t:"Area 5: Peace, Union and the Land Act",
+ caps:"CAPS: End of the war – peace negotiations; Union 1910; Natives Land Act 1913 and Sol Plaatje",
+ key:"How did the settlement after the war shape 20th century South Africa?",
+ p:["Boer leaders met at Vereeniging in May 1902 and accepted British terms. The Treaty of Vereeniging was signed in Pretoria on 31 May 1902. The question of voting rights for Black South Africans was postponed.",
+ "The Union of South Africa (1910) joined four colonies under white rule and excluded Black South Africans from the national franchise, building white co-operation at their expense. The Natives Land Act of 1913 limited African land ownership to small reserves, around 7 per cent of the land. Sol Plaatje recorded its human cost in <em>Native Life in South Africa</em> (1916). Historians see the Act as a forerunner of apartheid land policy."],
+ src:{cap:"Source 5A: add an extract from Sol Plaatje’s Native Life in South Africa, with the edition, page and date."},
+ src2:"",
+ q:[["State TWO terms of the peace agreement of 1902.",2,"L1"],["Why was the vote for Black South Africans left out of the peace settlement?",2,"L2"],["Explain how the Union of 1910 favoured white South Africans.",2,"L2"],["Describe the economic and social impact of the Natives Land Act of 1913.",3,"L2"],["How is the Land Act a precursor of apartheid? Use Source 5A and your own knowledge.",4,"L3"]],
+ links:[["SAHO: Natives Land Act, 1913","https://www.sahistory.org.za/"]]}
+];
+var cur=0,pins=document.getElementById("pins"),$=function(i){return document.getElementById(i)};
+$("route").setAttribute("points",A.map(function(s){return s.x+","+s.y}).join(" "));
+if(GOOGLE_EARTH_URL){$("earth").href=GOOGLE_EARTH_URL;$("earth").hidden=false}
+A.forEach(function(s,i){
+ var g=document.createElementNS("http://www.w3.org/2000/svg","g");
+ g.setAttribute("class","pin");g.setAttribute("tabindex","0");g.setAttribute("role","button");g.setAttribute("aria-label","Area "+(i+1)+": "+s.n);
+ g.innerHTML='<circle cx="'+s.x+'" cy="'+s.y+'" r="13"/><text x="'+s.x+'" y="'+(s.y+4)+'">'+(i+1)+'</text><text class="lab" x="'+(s.x+s.lx*19)+'" y="'+(s.y+4)+'" style="text-anchor:'+(s.lx>0?"start":"end")+'">'+s.n+'</text>';
+ g.onclick=function(){go(i)};
+ g.onkeydown=function(e){if(e.key==="Enter"||e.key===" "){e.preventDefault();go(i)}};
+ pins.appendChild(g);
+});
+function go(i){
+ cur=i;var s=A[i];
+ $("caps").textContent=s.caps;$("title").textContent=s.t;$("key").textContent=s.key;
+ $("body").innerHTML=s.p.map(function(p){return"<p>"+p+"</p>"}).join("");
+ var h="";
+ if(s.src.img)h+='<figure><img src="'+s.src.img+'" alt="'+s.src.cap+'" onerror="this.style.display=\'none\'"><figcaption>'+s.src.cap+'</figcaption></figure>';
+ else h+="<p>"+s.src.cap+"</p>";
+ if(s.src2)h+="<p>"+s.src2+"</p>";
+ $("src").innerHTML=h;
+ $("qs").innerHTML=s.q.map(function(q){return"<li>"+q[0]+' <span class="m">('+q[1]+" · "+q[2]+")</span></li>"}).join("");
+ $("links").innerHTML=s.links.map(function(l){return'<li><a href="'+l[1]+'" target="_blank" rel="noopener">'+l[0]+"</a></li>"}).join("");
+ $("count").textContent="Area "+(i+1)+" of "+A.length;
+ $("prev").disabled=i===0;$("next").disabled=i===A.length-1;
+ Array.prototype.forEach.call(pins.children,function(g,j){g.classList.toggle("on",j===i)});
+ history.replaceState(null,"","#area-"+(i+1));
+}
+$("prev").onclick=function(){if(cur>0)go(cur-1)};
+$("next").onclick=function(){if(cur<A.length-1)go(cur+1)};
+var m=/^#area-(\d)$/.exec(location.hash);
+go(m&&A[m[1]-1]?m[1]-1:0);
+</script>
+</body>
+</html>
